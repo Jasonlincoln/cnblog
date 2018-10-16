@@ -1,0 +1,35 @@
+{% extends 'backend/base.html' %}
+{% block content %}
+    <form class="">
+        {% csrf_token %}
+        <div class="form-group"></div>
+        <label>分类名称：</label>
+        <input type="text" id="cate" class="form-control">
+        <span class="error"></span>
+        <input type="button" class="btn btn-info" value="提交" id="sub_btn">
+    </form>
+    <script type="text/javascript">
+        $("#sub_btn").click(function () {
+            var category = $("#cate").val().trim();
+            $.ajax({
+                url: "",
+                type: "post",
+                data: {
+                    "category": category,
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.user) {
+                        location.href = "/cn_backend/";
+                    } else {
+                        $("#cate+ span").html(data.msg);
+                        setTimeout(function () {
+                            $("#cate+ span").html(" ");
+                        }, 1000)
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}

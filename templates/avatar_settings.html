@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form style="margin-top: 20px">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="avatar">
+                头像
+                <img id="avatar_img" src="media/{{ request.user.avatar }}"
+                     width="56" height="56">
+            </label>
+            <input type="file" id="avatar" name="avatar">
+        </div>
+
+        <input type="button" value="提交" class="btn btn-info" id="sub_change">
+    </form>
+    <script type="text/javascript">
+        $('#avatar').change(function () {
+            var file_obj = $(this)[0].files[0];
+            var reader = new FileReader();
+            reader.readAsDataURL(file_obj);
+
+            // 修改img的src属性， src=文件属性
+            reader.onload = function () {
+                $('#avatar_img').attr('src', reader.result);
+            }
+        });
+        $("#sub_change").click(function () {
+            var formdata = new FormData();
+            formdata.append("avatar", $("#avatar")[0].files[0]);
+            formdata.append("csrfmiddlewaretoken", $("[name='csrfmiddlewaretoken']").val());
+            $.ajax({
+                url: "",
+                type: "post",
+                contentType: false,
+                processData: false,
+                data: formdata,
+                success: function (data) {
+                    if (data.user) {
+                        alert("更改头像成功！");
+                        location.href = "/index/";
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}

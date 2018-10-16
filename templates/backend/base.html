@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客后台管理</title>
+
+    <link rel="stylesheet" href="/static/bs/css/bootstrap.min.css">
+    <script src="/static/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/static/bs/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/blog/css/backend.css">
+</head>
+<body>
+
+<div class="header">
+    <p class="title">
+        后台管理
+
+        <a class="info" href="/logout/">注销</a>
+        <a class="info" id="user_home" href="/{{ request.user.username }}/"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{ request.user.username }}</a>
+    </p>
+</div>
+
+
+<div class="container">
+    <div class="col-md-3">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                           aria-expanded="true" aria-controls="collapseOne">
+                            操作
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <p><a href="/cn_backend/add-article/">添加文章</a></p>
+                        <p><a href="/cn_backend/add-category/">添加分类</a></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-group" id="category" role="category" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#category" href="#category_list"
+                           aria-expanded="true" aria-controls="collapseOne">
+                            文章分类
+                        </a>
+                    </h4>
+                </div>
+                <div id="category_list" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <p><a href="/edit_category/">编辑分类</a></p>
+                        <p><a href="/edit/null/">未分类的({{uncategory_num}})</a></p>
+                        {% for category_obj in category_list  %}
+                            <p><a href="/edit/{{ category_obj.0|safe }}/">{{ category_obj.0 }}({{category_obj.1  }})</a></p>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-9">
+
+        <div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
+                                                          data-toggle="tab">文章</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab"
+                                           data-toggle="tab">日记</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home" style="margin-left: 0">
+
+                    {% block content %}
+
+                    {% endblock %}
+
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">
+
+                    <img src="/static/blog/img/meinv2.jpg" alt="">
+                    <img src="/static/blog/img/meinv3.jpg" alt="">
+                    <img class="pull-right" src="/static/blog/img/meinv.jpg" alt="">
+                </div>
+                <div role="tabpanel" class="tab-pane" id="messages">
+
+                    <img width="180" height="180" src="/static/blog/img/hashiqi2.jpg" alt="">
+
+                    <img width="180" height="180" src="/static/blog/img/dogg4.jpg" alt="">
+                    <img width="180" height="180" src="/static/blog/img/linhaifeng.jpg" alt=""><br>
+                    <img width="180" height="180" src="/static/blog/img/dogg3.jpeg" alt="">
+                    <img width="180" height="180" src="/static/blog/img/dogge2.jpg" alt="">
+
+                    <img width="180" height="180" src="/static/blog/img/dogg5.jpg" alt="">
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="settings">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

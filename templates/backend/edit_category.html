@@ -1,0 +1,23 @@
+{% extends  "backend/base.html"%}
+{% block content %}
+    <div class="category_list">
+        <table class="table">
+            <thead>
+                <th>Category</th>
+                <th>操作</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                {% for category in category_list %}
+                    <tr>
+                        <td>{{ category.0 }}</td>
+                        <td><a href="/edit_category/{{ category.2 }}/">编辑</a></td>
+                        <td><a href="/delete_category/{{ category.2 }}/">删除</a></td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

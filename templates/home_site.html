@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="article_list">
+        {% for article in current_page %}
+            <div class="article-item small clearfix">
+                <h5>
+                    <a href="/{{ article.user.username }}/articles/{{ article.pk }}">{{ article.title }}</a>
+                </h5>
+                <div class="article-desc">
+                        <span class="media-left">
+                            <a href="/{{ article.user.username }}/"></a>
+                        </span>
+                    <span class="media-right">
+                            {{ article.desc }}
+                        </span>
+
+                </div>
+                <div class="small pub_info pull-right">
+                    <span><a href="/{{ article.user.username }}/">{{ article.user.username }}</a></span>
+                    <span class="glyphicon glyphicon-comment">评论({{ article.comment_count }})</span>
+                    <span class="glyphicon glyphicon-thumbs-up">点赞{{ article.up_count }}</span>
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+     <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if current_page.has_previous %}
+                        <li><a href="?page={{ current_page.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+                    {% else %}
+                        <li class="previous disabled"><a href="#">上一页</a></li>
+                    {% endif %}
+                    {% for num in page_range %}
+                        {% if num == current_page_num %}
+                            <li class="active"><a href="/{{ request.user.username }}/?page={{ num }}">{{ num }}</a></li>
+                        {% else %}
+                            <li class="item"><a href="/{{ request.user.username }}/?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if current_page.has_next %}
+                        <li><a href="?page={{current_page.next_page_number}}" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+                    {% else %}
+                        <li class="disabled next"><a href="#">下一页</a></li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+{% endblock %}

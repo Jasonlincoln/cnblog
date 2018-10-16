@@ -1,0 +1,60 @@
+{% extends 'backend/base.html' %}
+{% block content %}
+    <form action="" method="post" onsubmit="return check()">
+        {% csrf_token %}
+        <div class="add_article">
+            <div class="alert-success text-center">添加文章</div>
+            <div class="add_article_region">
+                <div class="title form-group">
+                    <label for="">标题</label>
+                    <div>
+                        <input type="text" name="title" id='title'>
+                    </div>
+                </div>
+
+                <div class="content form-group">
+                    <label for="">内容(kindereditor编辑器， 不支持拖放/粘贴上传图片)</label>
+                    <div>
+                        <textarea name="content" id="article_create" cols="100%" rows="20"></textarea>
+                    </div>
+                </div>
+                <form class="category-choice">
+                    {% for cate in category_list %}
+                        <input type="radio" value="{{ cate.2 }}" name="category"><span>{{ cate.0 }}</span>
+                    {% endfor %}
+                </form>
+                <input type="submit" class="btn btn-info pull-right sub_btn" value="提交">
+            </div>
+        </div>
+
+    </form>
+    <script src="/static/jquery/jquery-3.3.1.min.js"></script>
+    <script charset="utf-8" src="/static/kindeditor/kindeditor-all-min.js"></script>
+    <script>
+        KindEditor.ready(function (K) {
+            window.editor = K.create('#article_create', {
+                width: '100%',
+                height: "500",
+                uploadJson: "/upload/",
+                resizeType: 0,
+                extraFileUploadParams: {
+                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                    category:$('input:radio[name="category"]:checked').val(),
+                },
+                filePostName: "upload_img"
+            });
+        });
+
+        function check() {
+            if ($("#title").val() == "") {
+                alert("请填写标题");
+                return false
+            } else {
+                return True
+            }
+        }
+
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form id="change_form" style="margin-top: 20px">
+    {% csrf_token %}
+        <div class="form-group">
+            <label>邮箱：</label>
+            <input type="text" value="{{ request.user.email }}" class="form-control" id="email">
+            <span class="error pull-right"></span>
+        </div>
+
+        <input type="button" value="提交" class="btn btn-info" id="sub_change">
+    </form>
+    <script type="text/javascript">
+        $('#sub_change').click(function () {
+            var email = $("#email").val();
+            var formdata = new FormData();
+            formdata.append("email", email);
+            formdata.append("csrfmiddlewaretoken", $("[name='csrfmiddlewaretoken']").val());
+
+            $.ajax({
+                url:"",
+                type: "post",
+                contentType:false,
+                processData:false,
+                data:formdata,
+                success: function (data) {
+                    console.log(data);
+                    if (data.user){
+                        alert("邮箱更改成功");
+                        location.href = "/index/";
+                    }else{
+                        console.log(data.msg);
+                        $("#email+ span").html(data.msg)
+                    }
+                }
+            })
+
+        })
+
+
+    </script>
+{% endblock %}

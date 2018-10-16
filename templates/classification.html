@@ -1,0 +1,28 @@
+<div>
+    <div class="panel panel-warning">
+        <div class="panel-heading">我的分类</div>
+        <div class="panel-body">
+            <p><a href="/{{ user.username }}/category/null">未分类的({{ uncategory_num }})</a></p>
+            {% for cate in cate_list %}
+                <p><a href="/{{ user.username }}/category/{{ cate.0 }}">{{ cate.0 }}({{ cate.1 }})</a></p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">我的标签</div>
+        <div class="panel-body">
+            {% for tag in tag_list %}
+                <p><a href="/{{ user.username }}/tag/{{ tag.0 }}">{{ tag.0 }}({{ tag.1 }})</a></p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="panel panel-danger">
+        <div class="panel-heading">我的归档</div>
+        <div class="panel-body">
+            {% for date in date_list %}
+                <p><a href="/{{ user.username }}/archive/{{ date.0 }}">{{ date.0 }}({{ date.1 }})</a></p>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
